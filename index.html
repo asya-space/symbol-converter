@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/style.css">
+        <title>Universal Converter</title>
+    </head>
+    <body>
+        <main>
+            <div class="wrap">
+                <div>
+                    <h1>Universal Base Converter</h1>
+                    <p class="lead">Conversion between <strong>any</strong> alphabet (numbers, letters, emoji, etc.).</p>
+                    <p class="lead">Works on <code>BigInt</code>.</p>
+                </div>
+
+                <div class="card">
+                    <label for="inputValue" style="font-weight: 600">Input string</label>
+                    <textarea id="inputValue" placeholder="e.g. hello or 101010 or 😍😊" rows="2"></textarea>
+
+                    <div class="row">
+                        <div>
+                            <label for="sourceAlphabet" style="font-weight: 600">Original alphabet</label>
+                            <textarea id="sourceAlphabet" placeholder="e.g. 0123456789abcdef" rows="2"></textarea>
+                            <div class="presets" id="srcPresets"></div>
+                        </div>
+                    <div>
+                        <label for="targetAlphabet" style="font-weight: 600">Target alphabet</label>
+                        <textarea id="targetAlphabet" placeholder="e.g. 01" rows="2"></textarea>
+                        <div class="presets" id="dstPresets"></div>
+                    </div>
+                </div>
+
+                <div class="presets" style="margin-top: 14px">
+                    <button class="btn primary" id="convertBtn">Convert (Enter)</button>
+                    <button class="btn ghost" id="swapBtn" title="Swap alphabets">Swap alhabets ↔</button>
+                    <button class="btn ghost" id="copyBtn" title="Copy the result">Copy the result</button>
+                </div>
+
+                <div class="hint">Note: alphabet symbols must be unique. Input can be done with emoji. An example of emoji alphabet is in presets.</div>
+            </div>
+
+            <div class="card">
+                <label>Result</label>
+                <div class="result">
+                    <div id="output" class="out"></div>
+                        <div style="display: flex; gap: 8px; flex-direction: column;">
+                            <div class="hint">Last status:</div>
+                            <div id="status" class="hint">—</div>
+                        </div>
+                    </div>
+        </div>
+    </main>
+
+    <div class="footer">
+        Press <span class="kbd">Enter</span> for conversion. Large numbers and arbitrary alphabets are supported :)
+    </div>
+  </div>
