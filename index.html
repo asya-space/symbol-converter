@@ -7,24 +7,23 @@
         <title>Universal Converter</title>
     </head>
     <body>
-        <main>
-            <div class="wrap">
-                <div>
-                    <h1>Universal Base Converter</h1>
-                    <p class="lead">Conversion between <strong>any</strong> alphabet (numbers, letters, emoji, etc.).</p>
-                    <p class="lead">Works on <code>BigInt</code>.</p>
-                </div>
+        <div class="wrap">
+            <div>
+                <h1>Universal Base Converter</h1>
+                <p class="lead">Conversion between <strong>any</strong> alphabet (numbers, letters, emoji, etc.).</p>
+                <p class="lead">Works on <code>BigInt</code>.</p>
+            </div>
 
-                <div class="card">
-                    <label for="inputValue" style="font-weight: 600">Input string</label>
-                    <textarea id="inputValue" placeholder="e.g. hello or 101010 or 😍😊" rows="2"></textarea>
+            <div class="card">
+                <label for="inputValue" style="font-weight: 600">Input string</label>
+                <textarea id="inputValue" placeholder="e.g. hello or 101010 or 😍😊" rows="2"></textarea>
 
-                    <div class="row">
-                        <div>
-                            <label for="sourceAlphabet" style="font-weight: 600">Original alphabet</label>
-                            <textarea id="sourceAlphabet" placeholder="e.g. 0123456789abcdef" rows="2"></textarea>
-                            <div class="presets" id="srcPresets"></div>
-                        </div>
+                <div class="row">
+                    <div>
+                        <label for="sourceAlphabet" style="font-weight: 600">Original alphabet</label>
+                        <textarea id="sourceAlphabet" placeholder="e.g. 0123456789abcdef" rows="2"></textarea>
+                        <div class="presets" id="srcPresets"></div>
+                    </div>
                     <div>
                         <label for="targetAlphabet" style="font-weight: 600">Target alphabet</label>
                         <textarea id="targetAlphabet" placeholder="e.g. 01" rows="2"></textarea>
@@ -45,15 +44,18 @@
                 <label>Result</label>
                 <div class="result">
                     <div id="output" class="out"></div>
-                        <div style="display: flex; gap: 8px; flex-direction: column;">
-                            <div class="hint">Last status:</div>
-                            <div id="status" class="hint">—</div>
+                        <div>
+                            <p class="hint">Last status:</p>
+                            <p id="status" class="hint" style="font-weight: 600">—</p>
                         </div>
                     </div>
+            </div>
+            </div>
+            </div>
+            <div class="footer">
+                <p>Press <span class="kbd">Enter</span> for conversion. Large numbers and arbitrary alphabets are supported :)</p>
+            </div>
         </div>
-    </main>
-
-    <div class="footer">
-        Press <span class="kbd">Enter</span> for conversion. Large numbers and arbitrary alphabets are supported :)
-    </div>
-  </div>
+        <script src="js/main.js"></script>
+    </body>
+</html>
