@@ -1,18 +1,15 @@
 # 🌐 Universal Base Converter
 
-A small web app to convert strings between **arbitrary alphabets**.  
-It supports classic numeral systems (binary, octal, decimal, hex) and custom alphabets — including **letters, symbols, and even emoji**.  
-Built in pure JavaScript, no frameworks. Uses **BigInt** for large numbers.
----
+<p>A small web app to convert strings between <b>arbitrary alphabets</b>.<br> 
+It supports classic numeral systems (binary, octal, decimal, hex) and custom alphabets — including <b>letters, symbols, and even emoji</b>.<br>  
+Built in pure JavaScript, no frameworks. Uses <b>BigInt</b> for large numbers.</p>
 
-<img width="750" height="722" alt="image" src="https://github.com/user-attachments/assets/b2052793-2ffa-4609-ae0d-3c18d475bf41" />
+<img width="2263" height="1235" alt="image" src="https://github.com/user-attachments/assets/15da118a-6642-4e32-9112-e02dac8b3767" />
 
-
----
 
 ## ✨ Features
 
-- 🔢 Convert between any alphabets:
+- 🔢 Convert between any symbols, words, digits, etc:
   - Binary, Octal, Decimal, Hex
   - Alphabetic (lowercase, uppercase, mixed)
   - Alphanumeric
@@ -23,7 +20,7 @@ Built in pure JavaScript, no frameworks. Uses **BigInt** for large numbers.
 - ⌨️ Press **Enter** to run conversion
 
 ---
-
+Deploy: [Click me!](https://asya-space.github.io/symbol-converter/)
 ## 🚀 Demo
 
 Paste any input, define **source alphabet** and **target alphabet**, then click **Convert**.
