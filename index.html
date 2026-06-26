@@ -7,7 +7,7 @@
         <title>Universal Converter</title>
     </head>
     <body>
-        <div class="wrap">
+        <main class="wrap">
             <div>
                 <h1>Universal Base Converter</h1>
                 <p class="lead">Conversion between <strong>any</strong> alphabet (numbers, letters, emoji, etc.).</p>
@@ -15,47 +15,49 @@
             </div>
 
             <div class="card">
-                <label for="inputValue" style="font-weight: 600">Input string</label>
+                <h2 class="title">Input string</h2>
+                <label for="inputValue"></label>
                 <textarea id="inputValue" placeholder="e.g. hello or 101010 or 😍😊" rows="2"></textarea>
 
                 <div class="row">
                     <div>
-                        <label for="sourceAlphabet" style="font-weight: 600">Original alphabet</label>
+                        <h2 class="title">Original alphabet</h2>
+                        <label for="sourceAlphabet"></label>
                         <textarea id="sourceAlphabet" placeholder="e.g. 0123456789abcdef" rows="2"></textarea>
                         <div class="presets" id="srcPresets"></div>
                     </div>
                     <div>
-                        <label for="targetAlphabet" style="font-weight: 600">Target alphabet</label>
+                        <h2 class="title">Target alphabet</h2>
+                        <label for="targetAlphabet"></label>
                         <textarea id="targetAlphabet" placeholder="e.g. 01" rows="2"></textarea>
                         <div class="presets" id="dstPresets"></div>
                     </div>
                 </div>
 
                 <div class="presets" style="margin-top: 14px">
-                    <button class="btn primary" id="convertBtn">Convert (Enter)</button>
-                    <button class="btn ghost" id="swapBtn" title="Swap alphabets">Swap alhabets ↔</button>
+                    <button class="btn primary" id="convertBtn">Convert [Enter]</button>
+                    <button class="btn ghost" id="swapBtn" title="Swap alphabets">swap ↔</button>
                     <button class="btn ghost" id="copyBtn" title="Copy the result">Copy the result</button>
                 </div>
 
-                <div class="hint">Note: alphabet symbols must be unique. Input can be done with emoji. An example of emoji alphabet is in presets.</div>
+                <p class="hint note">Note: alphabet symbols must be unique. Input can be done with emoji. An example of emoji alphabet is in presets.</p>
             </div>
 
             <div class="card">
-                <label>Result</label>
+                <h3 class="result-title">Result</h3>
                 <div class="result">
-                    <div id="output" class="out"></div>
+                    <div id="output" class="out">
                         <div>
                             <p class="hint">Last status:</p>
                             <p id="status" class="hint" style="font-weight: 600">—</p>
                         </div>
                     </div>
+                </div>
             </div>
-            </div>
-            </div>
-            <div class="footer">
-                <p>Press <span class="kbd">Enter</span> for conversion. Large numbers and arbitrary alphabets are supported :)</p>
-            </div>
-        </div>
+        </main>
+        <footer class="footer">
+            <p>Press <span class="kbd">Enter</span> for conversion. Large numbers and arbitrary alphabets are supported :)</p>
+        </footer>
         <script src="js/main.js"></script>
     </body>
 </html>
