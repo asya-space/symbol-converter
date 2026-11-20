@@ -20,27 +20,41 @@ function convert(input, sourceAlphabet, targetAlphabet) {
     if ((new Set([...sourceAlphabet])).size !== [...sourceAlphabet].length) {
         throw new Error('Original alphabet has repeating symbols');
     }
+
     if ((new Set([...targetAlphabet])).size !== [...targetAlphabet].length) {
         throw new Error('Target alphabet has repeating symbols');
     }
 
     // 0 => first symbol of any targetAlphabet
-    if (input.length === 0) return '';
+    // if (input.length === 0) return '';
+    if (input.length === 0) {
+            return '';
+        }
     // all symbols input need to be in sourceAlphabet
-    for (const ch of [...input]) {
+    /*for (const ch of [...input]) {
         if (!sourceAlphabet.includes(ch)) {
             throw new Error(`No symbol "${ch}" in original alphabet`);
         }
-    }
+        console.log([...input]);
+    }*/
 
     const fromBase = BigInt([...sourceAlphabet].length),
           toBase   = BigInt([...targetAlphabet].length);
 
     let decimal = 0n;
-    for (const ch of [...input]) {
+    const inputArray = [...input];
+        inputArray.forEach(char => {
+            if (!sourceAlphabet.includes(char)) {
+                throw new Error(`No symbol ${char} in original alphabet`);
+            };
+
+            const digit = BigInt([...sourceAlphabet].indexOf(char));
+            decimal = decimal * fromBase + digit;
+        });
+    /*for (const ch of [...input]) {
         const digit = BigInt([...sourceAlphabet].indexOf(ch));
         decimal = decimal * fromBase + digit;
-    }
+    }*/
 
     if (decimal === 0n) return [...targetAlphabet][0];
 
@@ -57,14 +71,14 @@ function convert(input, sourceAlphabet, targetAlphabet) {
     // UI
 const $ = sel => document.querySelector(sel),
       inputEl = $('#inputValue'),
-      srcEl = $('#sourceAlphabet'),
+      srcEl = $('#initAlphabet'),
       dstEl = $('#targetAlphabet'),
       outEl = $('#output'),
       statusEl = $('#status');
 
     // Presets
 const srcPresets = $('#srcPresets'),
-      dstPresets = $('#dstPresets'),
+      dstPresets = $('#destinationPresets'),
       presetButtons = [
                         { 
                             label: 'Binary',
@@ -120,6 +134,16 @@ renderPresetRow(dstPresets, v => dstEl.value = v);
 inputEl.value = 'hello';
 srcEl.value = Alphabet.ALPHA_LOWER;
 dstEl.value = Alphabet.HEX;
+
+inputEl.addEventListener('keydown', (e) => {
+        if (inputEl.value === '' && e.code === 'Backspace') {
+            inputEl.classList.add('error-placeholder');
+            inputEl.placeholder = 'PLEASE FILL THIS FIELD!';
+        } else {
+            inputEl.placeholder = 'e.g. hello or 101010 or 😍😊';
+            inputEl.classList.remove('error-placeholder');
+        }
+    })
 
 // Actions
 const convertBtn = $('#convertBtn'),
