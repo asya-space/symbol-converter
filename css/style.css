@@ -51,7 +51,8 @@ p.lead {
 }
 
 .card {
-    background: linear-gradient(90deg,rgba(9, 82, 10, 0.4) 45%, rgba(98, 199, 3, 0.63) 100%);
+    background: linear-gradient(90deg,rgba(9, 82, 10, 0.4) 45%, 
+                rgba(98, 199, 3, 0.63) 100%);
     border: 1px solid #222733;  
     padding: 18px 30px; 
     box-shadow: 0 var(--offset) 24px #0008, inset 0 1px 0 #ffffff08;
@@ -169,10 +170,12 @@ input:focus {
     margin-bottom: 25px;
     min-height: 48px; 
     word-break: break-word; 
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 
+                Consolas, "Liberation Mono", monospace;
 }
 
-.error { 
+.error,
+.error-placeholder::placeholder { 
     color: var(--error); 
     font-weight: 600; 
 }
