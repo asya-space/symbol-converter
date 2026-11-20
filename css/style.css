@@ -124,7 +124,8 @@ input:focus {
 }
 
 /* button "Convert" */
-.primary {
+.primary, 
+.active {
     background: linear-gradient(180deg, #ff9c2b, #ff7a00); 
     border-color: rgba(255, 138, 0, 0.7); 
     color: #101215;
