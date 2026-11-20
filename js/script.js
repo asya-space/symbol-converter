@@ -5,8 +5,6 @@ window.addEventListener('DOMContentLoaded', () => {
         OCTAL: '01234567',
         DECIMAL: '0123456789',
         HEX: '0123456789abcdef',
-        ALPHA_LOWER: 'abcdefghijklmnopqrstuvwxyz',
-        ALPHA_UPPER: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ALPHA: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
         ALPHA_NUM: '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
         EMOJI: '🙂🙃😊😇😉😍😘😎😭😡'
@@ -47,8 +45,8 @@ window.addEventListener('DOMContentLoaded', () => {
         if (input.length === 0) return '';
 
         // transform length of alphabet into BigInt type for correct work of convertation
-        const fromBase = BigInt([...initAlphabet]),
-              toBase = BigInt([...targetAlphabet]);
+        const fromBase = BigInt([...initAlphabet].length),
+              toBase = BigInt([...targetAlphabet].length);
 
         let decimal = 0n;
         const inputArray = [...input];
@@ -74,12 +72,11 @@ window.addEventListener('DOMContentLoaded', () => {
         };
 
         return result;
-    }
+    };
 
     // UI
     const $ = selector => document.querySelector(selector),
-          inputEl = $('#inputValue'),
-          srcEl = $('#initAlphabet'),
+          srcEl = $('#initAlphabet'), // input string
           destinationEl = $('#targetAlphabet'),
           outputEl = $('#output'),
           statusEl = $('#status');
@@ -89,73 +86,152 @@ window.addEventListener('DOMContentLoaded', () => {
       presetButtons = [
                         { 
                             label: 'Binary',
-                            value: Alphabet.BINARY
+                            value: data.BINARY
                         },
                         { 
                             label: 'Octal',
-                            value: Alphabet.OCTAL
+                            value: data.OCTAL
                         },
                         { 
                             label: 'Decimal',
-                            value: Alphabet.DECIMAL
+                            value: data.DECIMAL
                         },
                         {
                             label: 'Hex',
-                            value: Alphabet.HEX 
+                            value: data.HEX 
                         },
                         {
-                            label: 'alpha',
-                            value: Alphabet.ALPHA_LOWER
-                        },
-                        { 
-                            label: 'ALPHA',
-                            value: Alphabet.ALPHA_UPPER
-                        },
-                        {
-                            label: 'Alpha+Upper',
-                            value: Alphabet.ALPHA
+                            label: 'Alphabet (any letters, upper and lower)',
+                            value: data.ALPHA
                         },
                         {
                             label: 'Alphanumeric',
-                            value: Alphabet.ALPHA_NUM
+                            value: data.ALPHA_NUM
                         },
                         {
                             label: 'Emoji (10)',
-                            value: Alphabet.EMOJI
+                            value: data.EMOJI
                         },
                     ];
+    
+    function highlightButton(container, alphabetValue) {
+        const buttons = container.querySelectorAll('.btn');
+        buttons.forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.value === alphabetValue)
+        })
+    }
 
     function renderPresetRow(container, onPick) {
         presetButtons.forEach(button => {
             const btn = document.createElement('button');
             btn.className = 'btn';
             btn.textContent = button.label;
-            btn.addEventListener('click', () => onPick(button.value));
-            container.appendChild(button);
+            btn.dataset.value = button.value;
+
+            btn.addEventListener('click', () => {
+                onPick(button.value);
+                highlightButton(container, button.value);
+            });
+            container.appendChild(btn);
         })
     };
 
-    renderPresetRow(srcPresets, value => srcEl.value = value);
-    renderPresetRow(destPresets, value => destinationEl.value = value);
-
-    // Preview
-    inputEl.value = 'Hello';
-    srcEl.value = data.ALPHA_LOWER;
-    destinationEl.value = data.HEX;
-
-    inputEl.addEventListener('keydown', (e) => {
-        if (inputEl.value === '' && e.code === 'Backspace') {
-            inputEl.classList.add('error-placeholder');
-            inputEl.placeholder = 'PLEASE FILL THIS FIELD!';
-        } else {
-            inputEl.placeholder = 'e.g. hello or 101010 or 😍😊';
-            inputEl.classList.remove('error-placeholder');
-        }
+    renderPresetRow(srcPresets, value => {
+        srcEl.value = value;
+        startConvert();
     });
 
+    renderPresetRow(destPresets, value => {
+        destinationEl.value = value;
+        startConvert();
+    });
+
+    // Preview
+    srcEl.value = 'Hello';
+    destinationEl.value = data.HEX;
+    highlightButton(srcPresets, srcEl.value);
+    highlightButton(destPresets, destinationEl.value);
+
     // Activity
+    // $ instead of document.querySelector, was initiated above
     const convertBtn = $('#convertBtn'),
           swapBtn = $('#swapBtn'),
           copyBtn = $('#copyBtn');
 
+    function detectAlphabet(text) {
+        const chars = [...text];
+        if (chars.length === 0) return null;
+
+        const matchPreset = presetButtons.find(preset => {
+            const alphabetChars = [...preset.value];
+            return chars.every(char => alphabetChars.includes(char));
+        });
+
+        return matchPreset ? matchPreset.value : null;
+    }
+
+    function startConvert() {
+        outputEl.classList.remove('error');
+        statusEl.textContent = '_';
+        try {
+            const enterValue = convert(srcEl.value, destinationEl.value);
+            outputEl.textContent = enterValue;
+            statusEl.textContent = 'Cool!';
+        } catch(e) {
+            outputEl.textContent = e.message || String(e);
+            outputEl.classList.add('error');
+            statusEl.textContent = 'Error :(';
+        }
+    };
+
+    convertBtn.addEventListener('click', startConvert);
+
+    srcEl.addEventListener('input', () => {
+        const detectedValue = detectAlphabet(srcEl.value);
+
+        if (detectedValue) {
+            srcEl.value = detectedValue;
+            highlightButton(srcPresets, detectedValue);
+        } else {
+            highlightButton(srcPresets, '');
+        }
+        startConvert();
+    })
+
+    swapBtn.addEventListener('click', () => {
+        const acc = srcEl.value; // safe current value
+        srcEl.value = destinationEl.value; // where to provide value
+        destinationEl.value = acc; // write acc into second field (destination)    
+        
+        highlightButton(srcPresets, srcEl.value);
+        highlightButton(destPresets, destinationEl.value);
+
+        startConvert();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+        try {
+            // browser API
+            await navigator.clipboard.writeText(outputEl.textContent || '');
+            statusEl.textContent = 'Copied';
+        } catch {
+            statusEl.textContent = 'Copy failed';
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Enter' && !e.shiftKey) {
+            startConvert();
+        }
+
+        if (srcEl.value === '' && e.code === 'Backspace') {
+            srcEl.classList.add('error-placeholder');
+            srcEl.placeholder = 'PLEASE FILL THIS FIELD!';
+        } else {
+            srcEl.placeholder = 'e.g. hello or 101010 or 😍😊';
+            srcEl.classList.remove('error-placeholder');
+        }
+    });
+
+    startConvert();
 })
